@@ -80,7 +80,7 @@ echo [STEP 4/4] Installing oMLX Windows dependencies...
 echo This may take several minutes...
 echo.
 
-python -m pip install -e . -f pyproject.windows.toml
+python -m pip install -r requirements-windows.txt
 
 if %ERRORLEVEL% neq 0 (
     echo.

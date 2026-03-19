@@ -62,7 +62,7 @@ if %ERRORLEVEL% neq 0 (
     %PYTHON_EXEC% -m pip install --upgrade pip
     
     REM Install omlx-windows
-    %PYTHON_EXEC% -m pip install -e . -f pyproject.windows.toml
+    %PYTHON_EXEC% -m pip install -r requirements-windows.txt
     
     if %ERRORLEVEL% neq 0 (
         echo %RED%Failed to install oMLX%RESET%
