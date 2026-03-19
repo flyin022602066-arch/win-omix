@@ -60,10 +60,16 @@ def _compute_max_pending_writes() -> int:
     Scales proportionally: 512GB = 256, 32GB = 32, minimum 32.
     """
     try:
-        total_bytes = os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES")
+        # Cross-platform memory detection
+        if os.name == "nt":  # Windows
+            import psutil
+            total_bytes = psutil.virtual_memory().total
+        else:  # Unix/Linux/macOS
+            total_bytes = os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES")
+        
         total_gb = total_bytes / (1024 ** 3)
         return max(32, min(256, int(total_gb / 2)))
-    except (ValueError, OSError):
+    except (ValueError, OSError, ImportError):
         return 32  # Safe default
 
 
